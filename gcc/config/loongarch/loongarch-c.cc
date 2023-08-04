@@ -51,10 +51,22 @@ loongarch_cpu_cpp_builtins (cpp_reader *pfile)
 			     loongarch_tune_strings[la_target.cpu_tune], 1);
 
   /* Base architecture / ABI.  */
+  if (TARGET_32BIT)
+    {
+      builtin_define ("__loongarch_grlen=32");
+      builtin_define ("__loongarch32");
+    }
   if (TARGET_64BIT)
     {
       builtin_define ("__loongarch_grlen=64");
       builtin_define ("__loongarch64");
+    }
+
+  if (TARGET_ABI_ILP32)
+    {
+      builtin_define ("_ABILP32=3");
+      builtin_define ("_LOONGARCH_SIM=_ABILP32");
+      builtin_define ("__loongarch_ilp32");
     }
 
   if (TARGET_ABI_LP64)

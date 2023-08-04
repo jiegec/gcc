@@ -54,8 +54,9 @@ along with GCC; see the file COPYING3.  If not see
 
 /* ISA base */
 enum {
-  ISA_BASE_LA64		= 0,  /* LoongArch64 */
-  N_ISA_BASE_TYPES	= 1
+  ISA_BASE_LA32		= 0,  /* LoongArch32 */
+  ISA_BASE_LA64		= 1,  /* LoongArch64 */
+  N_ISA_BASE_TYPES	= 2
 };
 
 extern loongarch_def_array<const char *, N_ISA_BASE_TYPES>
@@ -79,16 +80,24 @@ extern loongarch_def_array<const char *, N_ISA_EXT_TYPES>
 
 /* Base ABI */
 enum {
-  ABI_BASE_LP64D	= 0,
-  ABI_BASE_LP64F	= 1,
-  ABI_BASE_LP64S	= 2,
-  N_ABI_BASE_TYPES	= 3
+  ABI_BASE_ILP32D	= 0,
+  ABI_BASE_ILP32F	= 1,
+  ABI_BASE_ILP32S	= 2,
+  ABI_BASE_LP64D	= 3,
+  ABI_BASE_LP64F	= 4,
+  ABI_BASE_LP64S	= 5,
+  N_ABI_BASE_TYPES	= 6
 };
 
 extern loongarch_def_array<const char *, N_ABI_BASE_TYPES>
   loongarch_abi_base_strings;
 
 #define TO_LP64_ABI_BASE(C) (C)
+
+#define ABI_ILP32_P(abi_base) \
+  (abi_base == ABI_BASE_ILP32D \
+   || abi_base == ABI_BASE_ILP32F \
+   || abi_base == ABI_BASE_ILP32S)
 
 #define ABI_LP64_P(abi_base) \
   (abi_base == ABI_BASE_LP64D \
@@ -187,22 +196,24 @@ struct loongarch_target
 enum {
   ARCH_NATIVE       = 0,
   ARCH_ABI_DEFAULT  = 1,
-  ARCH_LOONGARCH64  = 2,
-  ARCH_LA464	    = 3,
-  ARCH_LA664	    = 4,
-  ARCH_LA64V1_0     = 5,
-  ARCH_LA64V1_1     = 6,
-  N_ARCH_TYPES      = 7,
+  ARCH_LOONGARCH32  = 2,
+  ARCH_LOONGARCH64  = 3,
+  ARCH_LA464	    = 4,
+  ARCH_LA664	    = 5,
+  ARCH_LA64V1_0     = 6,
+  ARCH_LA64V1_1     = 7,
+  N_ARCH_TYPES      = 8,
 };
 
 /* Tune target presets (-mtune=*) */
 enum {
   TUNE_NATIVE       = 0,
   TUNE_GENERIC      = 1,
-  TUNE_LOONGARCH64  = 2,
-  TUNE_LA464	    = 3,
-  TUNE_LA664	    = 4,
-  N_TUNE_TYPES      = 5,
+  TUNE_LOONGARCH32  = 2,
+  TUNE_LOONGARCH64  = 3,
+  TUNE_LA464	    = 4,
+  TUNE_LA664	    = 5,
+  N_TUNE_TYPES      = 6,
 };
 
 /* TLS types.  */
