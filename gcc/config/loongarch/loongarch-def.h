@@ -54,8 +54,9 @@ extern "C" {
 
 /* enum isa_base */
 extern const char* loongarch_isa_base_strings[];
-#define ISA_BASE_LA64V100     0
-#define N_ISA_BASE_TYPES      1
+#define ISA_BASE_LA32V100     0
+#define ISA_BASE_LA64V100     1
+#define N_ISA_BASE_TYPES      2
 
 /* enum isa_ext_* */
 extern const char* loongarch_isa_ext_strings[];
@@ -67,10 +68,13 @@ extern const char* loongarch_isa_ext_strings[];
 
 /* enum abi_base */
 extern const char* loongarch_abi_base_strings[];
-#define ABI_BASE_LP64D	      0
-#define ABI_BASE_LP64F	      1
-#define ABI_BASE_LP64S	      2
-#define N_ABI_BASE_TYPES      3
+#define ABI_BASE_ILP32D	      0
+#define ABI_BASE_ILP32F	      1
+#define ABI_BASE_ILP32S	      2
+#define ABI_BASE_LP64D	      3
+#define ABI_BASE_LP64F	      4
+#define ABI_BASE_LP64S	      5
+#define N_ABI_BASE_TYPES      6
 
 /* enum abi_ext */
 extern const char* loongarch_abi_ext_strings[];
@@ -132,10 +136,11 @@ struct loongarch_target
 /* CPU properties.  */
 /* index */
 #define CPU_NATIVE	  0
-#define CPU_LOONGARCH64	  1
-#define CPU_LA464	  2
-#define N_ARCH_TYPES	  3
-#define N_TUNE_TYPES	  3
+#define CPU_LOONGARCH32	  1
+#define CPU_LOONGARCH64	  2
+#define CPU_LA464	  3
+#define N_ARCH_TYPES	  4
+#define N_TUNE_TYPES	  4
 
 /* parallel tables.  */
 extern const char* loongarch_cpu_strings[];

@@ -51,15 +51,25 @@ loongarch_config_target (struct loongarch_target *target,
 #define TARGET_CMODEL_EXTREME	    (la_target.cmodel == CMODEL_EXTREME)
 
 #define TARGET_HARD_FLOAT	    (la_target.isa.fpu != ISA_EXT_NOFPU)
-#define TARGET_HARD_FLOAT_ABI	    (la_target.abi.base == ABI_BASE_LP64D \
+#define TARGET_HARD_FLOAT_ABI	    (la_target.abi.base == ABI_BASE_ILP32D \
+				     || la_target.abi.base == ABI_BASE_ILP32F \
+				     || la_target.abi.base == ABI_BASE_LP64D \
 				     || la_target.abi.base == ABI_BASE_LP64F)
 
 #define TARGET_SOFT_FLOAT	  (la_target.isa.fpu == ISA_EXT_NOFPU)
-#define TARGET_SOFT_FLOAT_ABI	  (la_target.abi.base == ABI_BASE_LP64S)
+#define TARGET_SOFT_FLOAT_ABI	  (la_target.abi.base == ABI_BASE_ILP32S \
+				     || la_target.abi.base == ABI_BASE_LP64S)
 #define TARGET_SINGLE_FLOAT	  (la_target.isa.fpu == ISA_EXT_FPU32)
-#define TARGET_SINGLE_FLOAT_ABI	  (la_target.abi.base == ABI_BASE_LP64F)
+#define TARGET_SINGLE_FLOAT_ABI	  (la_target.abi.base == ABI_BASE_ILP32F \
+				     || la_target.abi.base == ABI_BASE_LP64F)
 #define TARGET_DOUBLE_FLOAT	  (la_target.isa.fpu == ISA_EXT_FPU64)
-#define TARGET_DOUBLE_FLOAT_ABI	  (la_target.abi.base == ABI_BASE_LP64D)
+#define TARGET_DOUBLE_FLOAT_ABI	  (la_target.abi.base == ABI_BASE_ILP32D \
+				     || la_target.abi.base == ABI_BASE_LP64D)
+
+#define TARGET_32BIT		  (la_target.isa.base == ISA_BASE_LA32V100)
+#define TARGET_ABI_ILP32	  (la_target.abi.base == ABI_BASE_ILP32D \
+				   || la_target.abi.base == ABI_BASE_ILP32F \
+				   || la_target.abi.base == ABI_BASE_ILP32S)
 
 #define TARGET_64BIT		  (la_target.isa.base == ISA_BASE_LA64V100)
 #define TARGET_ABI_LP64		  (la_target.abi.base == ABI_BASE_LP64D	\
@@ -78,9 +88,11 @@ loongarch_config_target (struct loongarch_target *target,
 				    ? (la_target.cpu_native) : (CPU_NATIVE)) \
 				    : (la_target.cpu_tune))
 
+#define TARGET_ARCH_LOONGARCH32	  (LARCH_ACTUAL_ARCH == CPU_LOONGARCH32)
 #define TARGET_ARCH_LOONGARCH64	  (LARCH_ACTUAL_ARCH == CPU_LOONGARCH64)
 #define TARGET_ARCH_LA464	  (LARCH_ACTUAL_ARCH == CPU_LA464)
 
+#define TARGET_TUNE_LOONGARCH32	  (LARCH_ACTUAL_TUNE == CPU_LOONGARCH32)
 #define TARGET_TUNE_LOONGARCH64	  (LARCH_ACTUAL_TUNE == CPU_LOONGARCH64)
 #define TARGET_TUNE_LA464	  (LARCH_ACTUAL_TUNE == CPU_LA464)
 

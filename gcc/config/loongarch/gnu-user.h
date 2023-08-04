@@ -34,6 +34,9 @@ along with GCC; see the file COPYING3.  If not see
   "/lib" ABI_GRLEN_SPEC "/ld-linux-loongarch-" ABI_SPEC ".so.1"
 
 #define MUSL_ABI_SPEC \
+  "%{mabi=ilp32d:-ilp32d}" \
+  "%{mabi=ilp32f:-ilp32f}" \
+  "%{mabi=ilp32s:-ilp32s}" \
   "%{mabi=lp64d:-lp64d}" \
   "%{mabi=lp64f:-lp64f}" \
   "%{mabi=lp64s:-lp64s}"

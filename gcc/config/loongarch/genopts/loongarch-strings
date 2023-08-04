@@ -23,10 +23,12 @@ OPTSTR_ARCH	      arch
 OPTSTR_TUNE	      tune
 
 STR_CPU_NATIVE	      native
+STR_CPU_LOONGARCH32   loongarch32
 STR_CPU_LOONGARCH64   loongarch64
 STR_CPU_LA464	      la464
 
 # Base architecture
+STR_ISA_BASE_LA32V100 la32
 STR_ISA_BASE_LA64V100 la64
 
 # -mfpu
@@ -42,6 +44,9 @@ OPTSTR_DOUBLE_FLOAT   double-float
 
 # -mabi=
 OPTSTR_ABI_BASE	      abi
+STR_ABI_BASE_ILP32D   ilp32d
+STR_ABI_BASE_ILP32F   ilp32f
+STR_ABI_BASE_ILP32S   ilp32s
 STR_ABI_BASE_LP64D    lp64d
 STR_ABI_BASE_LP64F    lp64f
 STR_ABI_BASE_LP64S    lp64s

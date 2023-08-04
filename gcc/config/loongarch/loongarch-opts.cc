@@ -36,6 +36,9 @@ struct loongarch_target la_target;
 #define ABI_COUNT (sizeof(abi_priority_list)/sizeof(struct loongarch_abi))
 static const struct loongarch_abi
 abi_priority_list[] = {
+    {ABI_BASE_ILP32D, ABI_EXT_BASE},
+    {ABI_BASE_ILP32F, ABI_EXT_BASE},
+    {ABI_BASE_ILP32S, ABI_EXT_BASE},
     {ABI_BASE_LP64D, ABI_EXT_BASE},
     {ABI_BASE_LP64F, ABI_EXT_BASE},
     {ABI_BASE_LP64S, ABI_EXT_BASE},
@@ -410,17 +413,23 @@ isa_default_abi (const struct loongarch_isa *isa)
   switch (isa->fpu)
     {
       case ISA_EXT_FPU64:
-	if (isa->base == ISA_BASE_LA64V100)
+	if (isa->base == ISA_BASE_LA32V100)
+	  abi.base = ABI_BASE_ILP32D;
+	else if (isa->base == ISA_BASE_LA64V100)
 	  abi.base = ABI_BASE_LP64D;
 	break;
 
       case ISA_EXT_FPU32:
-	if (isa->base == ISA_BASE_LA64V100)
+	if (isa->base == ISA_BASE_LA32V100)
+	  abi.base = ABI_BASE_ILP32F;
+	else if (isa->base == ISA_BASE_LA64V100)
 	  abi.base = ABI_BASE_LP64F;
 	break;
 
       case ISA_EXT_NOFPU:
-	if (isa->base == ISA_BASE_LA64V100)
+	if (isa->base == ISA_BASE_LA32V100)
+	  abi.base = ABI_BASE_ILP32S;
+	else if (isa->base == ISA_BASE_LA64V100)
 	  abi.base = ABI_BASE_LP64S;
 	break;
 
@@ -439,6 +448,8 @@ isa_base_compat_p (const struct loongarch_isa *set1,
 {
   switch (set2->base)
     {
+      case ISA_BASE_LA32V100:
+	return (set1->base == ISA_BASE_LA32V100);
       case ISA_BASE_LA64V100:
 	return (set1->base == ISA_BASE_LA64V100);
 
@@ -487,6 +498,11 @@ abi_default_cpu_arch (struct loongarch_abi abi)
 {
   switch (abi.base)
     {
+      case ABI_BASE_ILP32D:
+      case ABI_BASE_ILP32F:
+      case ABI_BASE_ILP32S:
+	if (abi.ext == ABI_EXT_BASE)
+	  return CPU_LOONGARCH32;
       case ABI_BASE_LP64D:
       case ABI_BASE_LP64F:
       case ABI_BASE_LP64S:

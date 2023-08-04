@@ -40,12 +40,17 @@ along with GCC; see the file COPYING3.  If not see
 const char*
 loongarch_cpu_strings[N_TUNE_TYPES] = {
   [CPU_NATIVE]		  = STR_CPU_NATIVE,
+  [CPU_LOONGARCH32]	  = STR_CPU_LOONGARCH32,
   [CPU_LOONGARCH64]	  = STR_CPU_LOONGARCH64,
   [CPU_LA464]		  = STR_CPU_LA464,
 };
 
 struct loongarch_isa
 loongarch_cpu_default_isa[N_ARCH_TYPES] = {
+  [CPU_LOONGARCH32] = {
+      .base = ISA_BASE_LA32V100,
+      .fpu = ISA_EXT_FPU32,
+  },
   [CPU_LOONGARCH64] = {
       .base = ISA_BASE_LA64V100,
       .fpu = ISA_EXT_FPU64,
@@ -58,6 +63,12 @@ loongarch_cpu_default_isa[N_ARCH_TYPES] = {
 
 struct loongarch_cache
 loongarch_cpu_cache[N_TUNE_TYPES] = {
+  [CPU_LOONGARCH32] = {
+      .l1d_line_size = 64,
+      .l1d_size = 64,
+      .l2d_size = 256,
+      .simultaneous_prefetches = 4,
+  },
   [CPU_LOONGARCH64] = {
       .l1d_line_size = 64,
       .l1d_size = 64,
@@ -74,6 +85,10 @@ loongarch_cpu_cache[N_TUNE_TYPES] = {
 
 struct loongarch_align
 loongarch_cpu_align[N_TUNE_TYPES] = {
+  [CPU_LOONGARCH32] = {
+    .function = "32",
+    .label = "16",
+  },
   [CPU_LOONGARCH64] = {
     .function = "32",
     .label = "16",
@@ -92,6 +107,9 @@ loongarch_cpu_align[N_TUNE_TYPES] = {
 struct loongarch_rtx_cost_data
 loongarch_cpu_rtx_cost_data[N_TUNE_TYPES] = {
   [CPU_NATIVE] = {
+      DEFAULT_COSTS
+  },
+  [CPU_LOONGARCH32] = {
       DEFAULT_COSTS
   },
   [CPU_LOONGARCH64] = {
@@ -121,6 +139,7 @@ loongarch_rtx_cost_optimize_size = {
 int
 loongarch_cpu_issue_rate[N_TUNE_TYPES] = {
   [CPU_NATIVE]	      = 4,
+  [CPU_LOONGARCH32]   = 4,
   [CPU_LOONGARCH64]   = 4,
   [CPU_LA464]	      = 4,
 };
@@ -128,6 +147,7 @@ loongarch_cpu_issue_rate[N_TUNE_TYPES] = {
 int
 loongarch_cpu_multipass_dfa_lookahead[N_TUNE_TYPES] = {
   [CPU_NATIVE]	      = 4,
+  [CPU_LOONGARCH32]   = 4,
   [CPU_LOONGARCH64]   = 4,
   [CPU_LA464]	      = 4,
 };
@@ -139,6 +159,7 @@ loongarch_cpu_multipass_dfa_lookahead[N_TUNE_TYPES] = {
 
 const char*
 loongarch_isa_base_strings[N_ISA_BASE_TYPES] = {
+  [ISA_BASE_LA32V100] = STR_ISA_BASE_LA32V100,
   [ISA_BASE_LA64V100] = STR_ISA_BASE_LA64V100,
 };
 
@@ -151,6 +172,9 @@ loongarch_isa_ext_strings[N_ISA_EXT_TYPES] = {
 
 const char*
 loongarch_abi_base_strings[N_ABI_BASE_TYPES] = {
+  [ABI_BASE_ILP32D] = STR_ABI_BASE_ILP32D,
+  [ABI_BASE_ILP32F] = STR_ABI_BASE_ILP32F,
+  [ABI_BASE_ILP32S] = STR_ABI_BASE_ILP32S,
   [ABI_BASE_LP64D] = STR_ABI_BASE_LP64D,
   [ABI_BASE_LP64F] = STR_ABI_BASE_LP64F,
   [ABI_BASE_LP64S] = STR_ABI_BASE_LP64S,
@@ -182,6 +206,15 @@ loongarch_switch_strings[] = {
 /* ABI-related definitions.  */
 const struct loongarch_isa
 abi_minimal_isa[N_ABI_BASE_TYPES][N_ABI_EXT_TYPES] = {
+  [ABI_BASE_ILP32D] = {
+      [ABI_EXT_BASE] = {.base = ISA_BASE_LA32V100, .fpu = ISA_EXT_FPU64},
+  },
+  [ABI_BASE_ILP32F] = {
+      [ABI_EXT_BASE] = {.base = ISA_BASE_LA32V100, .fpu = ISA_EXT_FPU32},
+  },
+  [ABI_BASE_ILP32S] = {
+      [ABI_EXT_BASE] = {.base = ISA_BASE_LA32V100, .fpu = ISA_EXT_NOFPU},
+  },
   [ABI_BASE_LP64D] = {
       [ABI_EXT_BASE] = {.base = ISA_BASE_LA64V100, .fpu = ISA_EXT_FPU64},
   },

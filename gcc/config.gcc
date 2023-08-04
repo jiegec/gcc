@@ -4901,10 +4901,24 @@ case "${target}" in
 			arch_pattern     arch_default   \
 			fpu_pattern      fpu_default    \
 			tune_pattern     tune_default   \
-			triplet_os       triplet_abi
+			triplet_os       triplet_abi    \
+			triplet_cpu
 
 		# Infer ABI from the triplet.
 		case ${target} in
+		loongarch32-*-*-*f64)
+			abi_pattern="ilp32d"
+			;;
+		loongarch32-*-*-*f32)
+			abi_pattern="ilp32f"
+			;;
+		loongarch32-*-*-*sf)
+			abi_pattern="ilp32s"
+			;;
+		loongarch32-*-*-*)
+			abi_pattern="ilp32[dfs]"
+			abi_default="ilp32d"
+			;;
 		loongarch64-*-*-*f64)
 			abi_pattern="lp64d"
 			;;
@@ -4939,7 +4953,7 @@ case "${target}" in
 
 		# Perform initial sanity checks on --with-* options.
 		case ${with_arch} in
-		"" | loongarch64 | la464) ;; # OK, append here.
+		"" | loongarch32 | loongarch64 | la464) ;; # OK, append here.
 		native)
 			if test x${host} != x${target}; then
 				echo "--with-arch=native is illegal for cross-compiler." 1>&2
@@ -4958,7 +4972,7 @@ case "${target}" in
 		esac
 
 		case ${with_abi} in
-		"" | lp64d | lp64f | lp64s) ;; # OK, append here.
+		"" | ilp32d | ilp32f | ilp32s | lp64d | lp64f | lp64s) ;; # OK, append here.
 		*)
 			echo "Unsupported ABI given in --with-abi=$with_abi" 1>&2
 			exit 1
@@ -5007,12 +5021,21 @@ case "${target}" in
 			;;
 		esac
 
-		case ${with_abi} in
-		  "lp64d") triplet_abi="";;
-		  "lp64f") triplet_abi="f32";;
-		  "lp64s") triplet_abi="sf";;
+		case ${target} in
+		loongarch32-*-*-*)
+			triplet_cpu="loongarch32"
+			;;
+		loongarch64-*-*-*)
+			triplet_cpu="loongarch64"
+			;;
 		esac
-		la_canonical_triplet="loongarch64-${triplet_os}${triplet_abi}"
+
+		case ${with_abi} in
+		  "ilp32d" | "lp64d") triplet_abi="";;
+		  "ilp32f" | "lp64f") triplet_abi="f32";;
+		  "ilp32s" | "lp64s") triplet_abi="sf";;
+		esac
+		la_canonical_triplet="${triplet_cpu}-${triplet_os}${triplet_abi}"
 
 		# Set default value for with_abiext (internal)
 		case ${with_abiext} in
@@ -5038,6 +5061,12 @@ case "${target}" in
 
 		# Infer ISA-related default options from the ABI: pass 1
 		case ${with_abi}/${with_abiext} in
+		ilp32*/base)
+			# architectures that support ilp32* ABI
+			arch_pattern="native|loongarch32"
+			# default architecture for ilp32* ABI
+			arch_default="loongarch32"
+			;;
 		lp64*/base)
 			# architectures that support lp64* ABI
 			arch_pattern="native|loongarch64|la464"
@@ -5052,14 +5081,14 @@ case "${target}" in
 
 		# Infer ISA-related default options from the ABI: pass 2
 		case ${with_abi}/${with_abiext} in
-		lp64d/base)
+		ilp32d/base | lp64d/base)
 			fpu_pattern="64"
 			;;
-		lp64f/base)
+		ilp32f/base | lp64f/base)
 			fpu_pattern="32|64"
 			fpu_default="32"
 			;;
-		lp64s/base)
+		ilp32s/base | lp64s/base)
 			fpu_pattern="none|32|64"
 			fpu_default="none"
 			;;
@@ -5117,6 +5146,10 @@ case "${target}" in
 		native)
 			tune_pattern="*"
 			tune_default="native"
+			;;
+		loongarch32)
+			tune_pattern="loongarch32"
+			tune_default="loongarch32"
 			;;
 		loongarch64)
 			tune_pattern="loongarch64|la464"
@@ -5187,6 +5220,9 @@ case "${target}" in
 				1)
 					# Component 1: Base ABI type
 					case ${component} in
+					ilp32d) elem_tmp="ABI_BASE_ILP32D,";;
+					ilp32f) elem_tmp="ABI_BASE_ILP32F,";;
+					ilp32s) elem_tmp="ABI_BASE_ILP32S,";;
 					lp64d) elem_tmp="ABI_BASE_LP64D,";;
 					lp64f) elem_tmp="ABI_BASE_LP64F,";;
 					lp64s) elem_tmp="ABI_BASE_LP64S,";;
@@ -5741,17 +5777,22 @@ case ${target} in
 		# See macro definitions from loongarch-opts.h and loongarch-cpu.h.
 		case ${with_arch} in
 		native)		tm_defines="${tm_defines} DEFAULT_CPU_ARCH=CPU_NATIVE" ;;
+		loongarch32)	tm_defines="${tm_defines} DEFAULT_CPU_ARCH=CPU_LOONGARCH32" ;;
 		la464)		tm_defines="${tm_defines} DEFAULT_CPU_ARCH=CPU_LA464" ;;
 		loongarch64)	tm_defines="${tm_defines} DEFAULT_CPU_ARCH=CPU_LOONGARCH64" ;;
 		esac
 
 		case ${with_tune} in
 		native)		tm_defines="${tm_defines} DEFAULT_CPU_TUNE=CPU_NATIVE" ;;
+		loongarch32)	tm_defines="${tm_defines} DEFAULT_CPU_TUNE=CPU_LOONGARCH32" ;;
 		la464)		tm_defines="${tm_defines} DEFAULT_CPU_TUNE=CPU_LA464" ;;
 		loongarch64)	tm_defines="${tm_defines} DEFAULT_CPU_TUNE=CPU_LOONGARCH64" ;;
 		esac
 
 		case ${with_abi} in
+		ilp32d)     tm_defines="${tm_defines} DEFAULT_ABI_BASE=ABI_BASE_ILP32D" ;;
+		ilp32f)     tm_defines="${tm_defines} DEFAULT_ABI_BASE=ABI_BASE_ILP32F" ;;
+		ilp32s)     tm_defines="${tm_defines} DEFAULT_ABI_BASE=ABI_BASE_ILP32S" ;;
 		lp64d)     tm_defines="${tm_defines} DEFAULT_ABI_BASE=ABI_BASE_LP64D" ;;
 		lp64f)     tm_defines="${tm_defines} DEFAULT_ABI_BASE=ABI_BASE_LP64F" ;;
 		lp64s)     tm_defines="${tm_defines} DEFAULT_ABI_BASE=ABI_BASE_LP64S" ;;

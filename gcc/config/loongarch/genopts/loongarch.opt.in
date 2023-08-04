@@ -86,6 +86,9 @@ EnumValue
 Enum(cpu_type) String(@@STR_CPU_NATIVE@@) Value(CPU_NATIVE)
 
 EnumValue
+Enum(cpu_type) String(@@STR_CPU_LOONGARCH32@@) Value(CPU_LOONGARCH32)
+
+EnumValue
 Enum(cpu_type) String(@@STR_CPU_LOONGARCH64@@) Value(CPU_LOONGARCH64)
 
 EnumValue
@@ -107,6 +110,15 @@ Target RejectNegative Joined Enum(cpu_type) Var(la_opt_cpu_tune) Init(M_OPTION_N
 Enum
 Name(abi_base) Type(int)
 Base ABI types for LoongArch:
+
+EnumValue
+Enum(abi_base) String(@@STR_ABI_BASE_ILP32D@@) Value(ABI_BASE_ILP32D)
+
+EnumValue
+Enum(abi_base) String(@@STR_ABI_BASE_ILP32F@@) Value(ABI_BASE_ILP32F)
+
+EnumValue
+Enum(abi_base) String(@@STR_ABI_BASE_ILP32S@@) Value(ABI_BASE_ILP32S)
 
 EnumValue
 Enum(abi_base) String(@@STR_ABI_BASE_LP64D@@) Value(ABI_BASE_LP64D)

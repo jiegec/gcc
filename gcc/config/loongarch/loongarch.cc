@@ -6209,7 +6209,7 @@ loongarch_option_override_internal (struct gcc_options *opts)
 			   la_opt_cpu_arch, la_opt_cpu_tune, la_opt_fpu,
 			   la_opt_abi_base, la_opt_abi_ext, la_opt_cmodel, 0);
 
-  if (TARGET_ABI_LP64)
+  if (TARGET_ABI_LP64 || TARGET_ABI_ILP32)
     flag_pcc_struct_return = 0;
 
   /* Decide which rtx_costs structure to use.  */

@@ -27,9 +27,11 @@ along with GCC; see the file COPYING3.  If not see
 #define OPTSTR_TUNE "tune"
 
 #define STR_CPU_NATIVE "native"
+#define STR_CPU_LOONGARCH32 "loongarch32"
 #define STR_CPU_LOONGARCH64 "loongarch64"
 #define STR_CPU_LA464 "la464"
 
+#define STR_ISA_BASE_LA32V100 "la32"
 #define STR_ISA_BASE_LA64V100 "la64"
 
 #define OPTSTR_ISA_EXT_FPU "fpu"
@@ -43,6 +45,9 @@ along with GCC; see the file COPYING3.  If not see
 #define OPTSTR_DOUBLE_FLOAT "double-float"
 
 #define OPTSTR_ABI_BASE "abi"
+#define STR_ABI_BASE_ILP32D "ilp32d"
+#define STR_ABI_BASE_ILP32F "ilp32f"
+#define STR_ABI_BASE_ILP32S "ilp32s"
 #define STR_ABI_BASE_LP64D "lp64d"
 #define STR_ABI_BASE_LP64F "lp64f"
 #define STR_ABI_BASE_LP64S "lp64s"
