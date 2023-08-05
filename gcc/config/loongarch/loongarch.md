@@ -1965,6 +1965,16 @@
   [(set_attr "move_type" "move,load,store")
    (set_attr "mode" "DF")])
 
+(define_split
+  [(set (match_operand:MOVE64 0 "nonimmediate_operand")
+       (match_operand:MOVE64 1 "move_operand"))]
+  "reload_completed && loongarch_split_move_p (operands[0], operands[1])"
+  [(const_int 0)]
+{
+  loongarch_split_move (operands[0], operands[1], curr_insn);
+  DONE;
+})
+
 ;; Emit a doubleword move in which exactly one of the operands is
 ;; a floating-point register.  We can't just emit two normal moves
 ;; because of the constraints imposed by the FPU register model;
