@@ -2297,7 +2297,7 @@
 			(match_operand:SPLITF 2 "register_operand" "0")]
 			UNSPEC_MOVGR2FRH))]
   "TARGET_DOUBLE_FLOAT"
-  "movgr2frh.w\t%z1,%0"
+  "movgr2frh.w\t%0,%z1"
   [(set_attr "move_type" "mgtf")
    (set_attr "mode" "<HALFMODE>")])
 
