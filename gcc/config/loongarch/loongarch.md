@@ -2002,7 +2002,7 @@
 (define_expand "fixuns_truncdfdi2"
   [(set (match_operand:DI 0 "register_operand")
 	(unsigned_fix:DI (match_operand:DF 1 "register_operand")))]
-  "TARGET_DOUBLE_FLOAT"
+  "TARGET_DOUBLE_FLOAT && TARGET_64BIT"
 {
   rtx reg1 = gen_reg_rtx (DFmode);
   rtx reg2 = gen_reg_rtx (DFmode);
@@ -2084,7 +2084,7 @@
 (define_expand "fixuns_truncsfdi2"
   [(set (match_operand:DI 0 "register_operand")
 	(unsigned_fix:DI (match_operand:SF 1 "register_operand")))]
-  "TARGET_DOUBLE_FLOAT"
+  "TARGET_DOUBLE_FLOAT && TARGET_64BIT"
 {
   rtx reg1 = gen_reg_rtx (SFmode);
   rtx reg2 = gen_reg_rtx (SFmode);
