@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-O2 -mabi=lp64d -mstrict-align" } */
+/* { dg-options "-O2 -march=loongarch64 -mabi=lp64d -mstrict-align" } */
 
 /* Three loop iterations each contains 4 st.b, and 3 st.b after the loop */
 /* { dg-final { scan-assembler-times "st\\.b" 7 } } */

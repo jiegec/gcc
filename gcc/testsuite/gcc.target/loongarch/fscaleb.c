@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-O2 -mabi=lp64d -mdouble-float -fno-math-errno" } */
+/* { dg-options "-O2 -march=loongarch64 -mabi=lp64d -mdouble-float -fno-math-errno" } */
 /* { dg-final { scan-assembler-times "fscaleb\\.s" 3 } } */
 /* { dg-final { scan-assembler-times "fscaleb\\.d" 4 } } */
 /* { dg-final { scan-assembler-times "slli\\.w" 1 } } */

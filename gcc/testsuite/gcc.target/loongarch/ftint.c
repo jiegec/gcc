@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-mabi=lp64d -mdouble-float -fno-math-errno -ffp-int-builtin-inexact" } */
+/* { dg-options "-march=loongarch64 -mabi=lp64d -mdouble-float -fno-math-errno -ffp-int-builtin-inexact" } */
 /* { dg-final { scan-assembler "ftint\\.l\\.s" } } */
 /* { dg-final { scan-assembler "ftint\\.l\\.d" } } */
 /* { dg-final { scan-assembler "ftintrm\\.l\\.s" } } */

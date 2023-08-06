@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-mabi=lp64d -O0 -fpic -fno-plt -mno-explicit-relocs -mcmodel=medium" } */
+/* { dg-options "-march=loongarch64 -mabi=lp64d -O0 -fpic -fno-plt -mno-explicit-relocs -mcmodel=medium" } */
 /* { dg-final { scan-assembler "test:.*la\.global\t.*g\n\tjirl" } } */
 /* { dg-final { scan-assembler "test1:.*la\.global\t.*f\n\tjirl" } } */
 /* { dg-final { scan-assembler "test2:.*la\.local\t.*l\n\tjirl" } } */

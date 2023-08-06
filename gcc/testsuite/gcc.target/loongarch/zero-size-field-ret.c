@@ -2,7 +2,7 @@
    returning.  */
 
 /* { dg-do compile } */
-/* { dg-options "-O2 -mdouble-float -mabi=lp64d" } */
+/* { dg-options "-O2 -mdouble-float -march=loongarch64 -mabi=lp64d" } */
 /* { dg-final { scan-assembler-not "\\\$r4" } } */
 
 struct test

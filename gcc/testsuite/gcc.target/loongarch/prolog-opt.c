@@ -1,7 +1,7 @@
 /* Test that LoongArch backend stack drop operation optimized.  */
 
 /* { dg-do compile } */
-/* { dg-options "-O2 -mabi=lp64d -fno-stack-protector" } */
+/* { dg-options "-O2 -march=loongarch64 -mabi=lp64d -fno-stack-protector" } */
 /* { dg-final { scan-assembler "addi.d\t\\\$r3,\\\$r3,-16" } } */
 
 extern int printf (char *, ...);

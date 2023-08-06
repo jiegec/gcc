@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-O -mabi=lp64d" } */
+/* { dg-options "-O -march=loongarch64 -mabi=lp64d" } */
 
 /* None of these functions should load the const operand into a temp
    register.  */

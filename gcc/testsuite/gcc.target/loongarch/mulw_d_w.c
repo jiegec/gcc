@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-O2 -mabi=lp64d" } */
+/* { dg-options "-O2 -march=loongarch64 -mabi=lp64d" } */
 /* { dg-final { scan-assembler "mulw.d.w" } } */
 
 /* This should be optimized to mulw.d.w for LA64.  */

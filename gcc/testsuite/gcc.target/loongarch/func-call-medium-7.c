@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-mabi=lp64d -O0 -fpic -fno-plt -mexplicit-relocs -mcmodel=medium" } */
+/* { dg-options "-march=loongarch64 -mabi=lp64d -O0 -fpic -fno-plt -mexplicit-relocs -mcmodel=medium" } */
 /* { dg-final { scan-assembler "test:.*pcalau12i\t.*%got_pc_hi20\\(g\\)\n\tld\.d\t.*%got_pc_lo12\\(g\\)\n\tjirl" } } */
 /* { dg-final { scan-assembler "test1:.*pcalau12i\t.*%got_pc_hi20\\(f\\)\n\tld\.d\t.*%got_pc_lo12\\(f\\)\n\tjirl" } } */
 /* { dg-final { scan-assembler "test2:.*pcalau12i\t.*%pc_hi20\\(l\\)\n\tjirl.*%pc_lo12\\(l\\)" } } */

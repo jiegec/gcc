@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-O2 -mabi=lp64d" } */
+/* { dg-options "-O2 -march=loongarch64 -mabi=lp64d" } */
 /* { dg-final { scan-assembler-times "bytepick.w\t\\\$r4,\\\$r5,\\\$r4" 3 } } */
 /* { dg-final { scan-assembler-times "bytepick.d\t\\\$r4,\\\$r5,\\\$r4" 7 } } */
 /* { dg-final { scan-assembler-not "slli.w" } } */
