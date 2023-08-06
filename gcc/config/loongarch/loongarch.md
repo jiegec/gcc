@@ -1777,22 +1777,13 @@
     DONE;
 })
 
-(define_insn_and_split "*movdi_32bit"
+(define_insn "*movdi_32bit"
   [(set (match_operand:DI 0 "nonimmediate_operand" "=r,r,r,w,*f,*f,*r,*m")
        (match_operand:DI 1 "move_operand" "r,i,w,r,*J*r,*m,*f,*f"))]
   "!TARGET_64BIT
    && (register_operand (operands[0], DImode)
        || reg_or_0_operand (operands[1], DImode))"
   { return loongarch_output_move (operands[0], operands[1]); }
-  "CONST_INT_P (operands[1]) && REG_P (operands[0]) && GP_REG_P (REGNO
-  (operands[0]))"
-  [(const_int 0)]
-  "
-{
-  loongarch_move_integer (operands[0], operands[0], INTVAL (operands[1]));
-  DONE;
-}
-  "
   [(set_attr "move_type" "move,const,load,store,mgtf,fpload,mftg,fpstore")
    (set_attr "mode" "DI")])
 
@@ -1804,7 +1795,7 @@
        || reg_or_0_operand (operands[1], DImode))"
   { return loongarch_output_move (operands[0], operands[1]); }
   "CONST_INT_P (operands[1]) && REG_P (operands[0]) && GP_REG_P (REGNO
-  (operands[0]))"
+  (operands[0])) && TARGET_64BIT"
   [(const_int 0)]
   "
 {
