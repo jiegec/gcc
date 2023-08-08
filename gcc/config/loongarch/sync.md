@@ -77,7 +77,7 @@
       [(match_operand:GPR 1 "reg_or_0_operand" "rJ")
        (match_operand:SI 2 "const_int_operand")]      ;; model
       UNSPEC_ATOMIC_STORE))]
-  ""
+  "TARGET_64BIT"
   "amswap%A2.<amo>\t$zero,%z1,%0"
   [(set (attr "length") (const_int 8))])
 
@@ -88,7 +88,7 @@
 			   (match_operand:GPR 1 "reg_or_0_operand" "rJ"))
 	   (match_operand:SI 2 "const_int_operand")] ;; model
 	 UNSPEC_SYNC_OLD_OP))]
-  ""
+  "TARGET_64BIT"
   "am<amop>%A2.<amo>\t$zero,%z1,%0"
   [(set (attr "length") (const_int 8))])
 
@@ -101,7 +101,7 @@
 		     (match_operand:GPR 2 "reg_or_0_operand" "rJ"))
 	   (match_operand:SI 3 "const_int_operand")] ;; model
 	 UNSPEC_SYNC_OLD_OP))]
-  ""
+  "TARGET_64BIT"
   "am<amop>%A3.<amo>\t%0,%z2,%1"
   [(set (attr "length") (const_int 8))])
 
@@ -113,7 +113,7 @@
 	  UNSPEC_SYNC_EXCHANGE))
    (set (match_dup 1)
 	(match_operand:GPR 2 "register_operand" "r"))]
-  ""
+  "TARGET_64BIT"
   "amswap%A3.<amo>\t%0,%z2,%1"
   [(set (attr "length") (const_int 8))])
 
@@ -182,7 +182,7 @@
   [(match_operand:QI 0 "register_operand" "")     ;; bool output
    (match_operand:QI 1 "memory_operand" "+ZB")    ;; memory
    (match_operand:SI 2 "const_int_operand" "")]   ;; model
-  ""
+  "TARGET_64BIT"
 {
   /* We have no QImode atomics, so use the address LSBs to form a mask,
      then use an aligned SImode atomic.  */
