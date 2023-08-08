@@ -205,7 +205,7 @@ along with GCC; see the file COPYING3.  If not see
 
 #define FLOAT_TYPE_SIZE 32
 #define DOUBLE_TYPE_SIZE 64
-#define LONG_DOUBLE_TYPE_SIZE (TARGET_64BIT ? 128 : 64)
+#define LONG_DOUBLE_TYPE_SIZE 128
 
 /* Define the sizes of fixed-point types.  */
 #define SHORT_FRACT_TYPE_SIZE 8
