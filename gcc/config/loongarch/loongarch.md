@@ -1482,11 +1482,11 @@
 
 ;; conversion of a floating-point value to a integer
 
-(define_insn "fix_trunc<ANYF:mode><GPR:mode>2"
-  [(set (match_operand:GPR 0 "register_operand" "=f")
-	(fix:GPR (match_operand:ANYF 1 "register_operand" "f")))]
+(define_insn "fix_trunc<ANYF:mode><ANYFI:mode>2"
+  [(set (match_operand:ANYFI 0 "register_operand" "=f")
+	(fix:ANYFI (match_operand:ANYF 1 "register_operand" "f")))]
   ""
-  "ftintrz.<GPR:ifmt>.<ANYF:fmt> %0,%1"
+  "ftintrz.<ANYFI:ifmt>.<ANYF:fmt> %0,%1"
   [(set_attr "type" "fcvt")
    (set_attr "mode" "<ANYF:MODE>")])
 
