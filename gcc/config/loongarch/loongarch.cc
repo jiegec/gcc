@@ -11034,7 +11034,7 @@ static machine_mode
 loongarch_c_mode_for_floating_type (enum tree_index ti)
 {
   if (ti == TI_LONG_DOUBLE_TYPE)
-    return TARGET_64BIT ? TFmode : DFmode;
+    return TFmode;
   return default_mode_for_floating_type (ti);
 }
 

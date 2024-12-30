@@ -156,7 +156,7 @@ along with GCC; see the file COPYING3.  If not see
 #define LONG_LONG_TYPE_SIZE 64
 
 /* LONG_DOUBLE_TYPE_SIZE get poisoned, so add LA_ prefix.  */
-#define LA_LONG_DOUBLE_TYPE_SIZE (TARGET_64BIT ? 128 : 64)
+#define LA_LONG_DOUBLE_TYPE_SIZE 128
 
 /* Define the sizes of fixed-point types.  */
 #define SHORT_FRACT_TYPE_SIZE 8
