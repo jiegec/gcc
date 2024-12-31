@@ -4451,6 +4451,10 @@ loongarch_split_move_p (rtx dest, rtx src)
       || LASX_SUPPORTED_MODE_P (GET_MODE (dest)))
     return loongarch_split_vector_move_p (dest, src);
 
+  /* Check if fp moves need splitting according to fpu width.  */
+  if (GET_MODE_CLASS (GET_MODE (dest)) == MODE_FLOAT)
+    return size > UNITS_PER_HWFPVALUE;
+
   /* Otherwise split all multiword moves.  */
   return size > UNITS_PER_WORD;
 }
@@ -4799,6 +4803,14 @@ loongarch_output_move (rtx *operands)
 		}
 	      if (ISA_HAS_LSX && src == CONST0_RTX (GET_MODE (src)))
 		return "vxor.v\t%w0,%w0,%w0";
+
+
+	      /* LoongArch32 does not have movgr2fr.d */
+	      if (TARGET_32BIT && dbl_p)
+		{
+		  gcc_assert (src == CONST0_RTX (GET_MODE (src)));
+		  return "movgr2fr.w\t%0,$zero\n\tmovgr2frh.w\t%0,$zero";
+		}
 
 	      return dbl_p ? "movgr2fr.d\t%0,%z1" : "movgr2fr.w\t%0,%z1";
 	    }
