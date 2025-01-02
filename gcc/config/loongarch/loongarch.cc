@@ -4465,6 +4465,8 @@ loongarch_split_move (rtx dest, rtx src)
   if (LSX_SUPPORTED_MODE_P (GET_MODE (dest))
       || LASX_SUPPORTED_MODE_P (GET_MODE (dest)))
     loongarch_split_vector_move (dest, src);
+  else if (GET_MODE (dest) == E_DImode && TARGET_32BIT)
+    loongarch_split_doubleword_move (dest, src);
   else
     gcc_unreachable ();
 }
@@ -4714,6 +4716,27 @@ loongarch_split_vector_move (rtx dest, rtx src)
 	      loongarch_emit_move (d, s);
 	    }
 	}
+    }
+}
+
+/* Split a doubleword move from SRC to DEST.  On 32-bit targets,
+   this function handles 64-bit moves.  */
+
+void
+loongarch_split_doubleword_move (rtx dest, rtx src)
+{
+  /* The operation can be split into two normal moves.  Decide in
+     which order to do them.  */
+  rtx low_dest = loongarch_subword (dest, false);
+  if (REG_P (low_dest) && reg_overlap_mentioned_p (low_dest, src))
+    {
+      loongarch_emit_move (loongarch_subword (dest, true), loongarch_subword (src, true));
+      loongarch_emit_move (low_dest, loongarch_subword (src, false));
+    }
+  else
+    {
+      loongarch_emit_move (low_dest, loongarch_subword (src, false));
+      loongarch_emit_move (loongarch_subword (dest, true), loongarch_subword (src, true));
     }
 }
 
